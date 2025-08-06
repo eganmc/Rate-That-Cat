@@ -1,1 +1,1 @@
-web: gunicorn rate-that-cat.wsgi
+web: gunicorn catgallery.wsgi
