@@ -1,0 +1,12 @@
+{% extends 'cats/base.html' %}
+{% block content %}
+<img src="{{ cat.image.url }}" style="max-width:400px;" class="mb-3"><br>
+<h2>{{ cat.name }}</h2>
+<p>{{ cat.description }}</p>
+<p>Rating: {{ cat.rating }}</p>
+<a href="{% url 'cat_update' cat.pk %}" class="btn btn-warning">Edit</a>
+<form action="{% url 'cat_delete' cat.pk %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'cats/base.html' %}
+{% block content %}
+<div class="row">
+{% for cat in cats %}
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <img src="{{ cat.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+            <div class="card-body">
+                <h5 class="card-title">{{ cat.name }}</h5>
+                <p>Rating: {{ cat.rating }}</p>
+                <a href="{% url 'cat_detail' cat.pk %}" class="btn btn-primary">View</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}
