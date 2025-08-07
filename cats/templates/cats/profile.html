@@ -1,0 +1,145 @@
+{% extends 'cats/base.html' %}
+{% block content %}
+
+<h2>{{ user.username }}'s Profile</h2>
+<p class="text-muted">Member since {{ user.date_joined|date:"M d, Y" }}</p>
+
+<div class="row">
+    <!-- User Stats -->
+    <div class="col-12 mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-primary">{{ user_cats.count }}</h3>
+                        <p class="mb-0">Cats Uploaded</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-success">{{ user_ratings.count }}</h3>
+                        <p class="mb-0">Ratings Given</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-info">{{ user_comments.count }}</h3>
+                        <p class="mb-0">Comments Posted</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabs for different sections -->
+<ul class="nav nav-tabs" id="profileTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="cats-tab" data-bs-toggle="tab" data-bs-target="#cats" type="button">
+            My Cats ({{ user_cats.count }})
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button">
+            My Comments ({{ user_comments.count }})
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="ratings-tab" data-bs-toggle="tab" data-bs-target="#ratings" type="button">
+            My Ratings ({{ user_ratings.count }})
+        </button>
+    </li>
+</ul>
+
+<div class="tab-content mt-3" id="profileTabsContent">
+    <!-- My Cats Tab -->
+    <div class="tab-pane fade show active" id="cats">
+        {% if user_cats %}
+            <div class="row">
+                {% for cat in user_cats %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card">
+                            <img src="{{ cat.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ cat.name }}">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ cat.name }}</h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fas fa-star"></i> {{ cat.average_rating }}/10
+                                    </span>
+                                    <a href="{% url 'cat_detail' cat.pk %}" class="btn btn-sm btn-primary">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                <p>You haven't uploaded any cats yet. <a href="{% url 'cat_create' %}">Upload your first cat!</a></p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- My Comments Tab -->
+    <div class="tab-pane fade" id="comments">
+        {% if user_comments %}
+            {% for comment in user_comments %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mb-1">
+                                <a href="{% url 'cat_detail' comment.cat.pk %}">{{ comment.cat.name }}</a>
+                            </h6>
+                            <small class="text-muted">
+                                {% if comment.user_rating %}
+                                    <span class="badge bg-secondary">{{ comment.user_rating }}/10</span>
+                                {% endif %}
+                                {{ comment.created_at|date:"M d, Y" }}
+                            </small>
+                        </div>
+                        <p class="mb-0">{{ comment.text }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">
+                <p>You haven't posted any comments yet. Rate some cats and share your thoughts!</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- My Ratings Tab -->
+    <div class="tab-pane fade" id="ratings">
+        {% if user_ratings %}
+            {% for rating in user_ratings %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">
+                                    <a href="{% url 'cat_detail' rating.cat.pk %}">{{ rating.cat.name }}</a>
+                                </h6>
+                                <small class="text-muted">by {{ rating.cat.owner.username }}</small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-warning text-dark fs-6">{{ rating.score }}/10</span>
+                                <br>
+                                <small class="text-muted">{{ rating.created_at|date:"M d, Y" }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">
+                <p>You haven't rated any cats yet. <a href="{% url 'cat_list' %}">Browse the gallery</a> and rate some cats!</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,12 +1,118 @@
 {% extends 'cats/base.html' %}
 {% block content %}
-<img src="{{ cat.image.url }}" style="max-width:400px;" class="mb-3"><br>
-<h2>{{ cat.name }}</h2>
-<p>{{ cat.description }}</p>
-<p>Rating: {{ cat.rating }}</p>
-<a href="{% url 'cat_update' cat.pk %}" class="btn btn-warning">Edit</a>
-<form action="{% url 'cat_delete' cat.pk %}" method="post" style="display:inline;">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Delete</button>
-</form>
+
+<div class="row">
+    <div class="col-md-6">
+        <img src="{{ cat.image.url }}" class="img-fluid rounded shadow" alt="{{ cat.name }}">
+    </div>
+    
+    <div class="col-md-6">
+        <h2>{{ cat.name }}</h2>
+        <p class="text-muted">Uploaded by {{ cat.owner.username }} on {{ cat.created_at|date:"M d, Y" }}</p>
+        
+        {% if cat.description %}
+            <p class="lead">{{ cat.description }}</p>
+        {% endif %}
+
+        <!-- Rating Display -->
+        <div class="mb-3">
+            <h5>Rating: 
+                <span class="badge bg-warning text-dark">
+                    <i class="fas fa-star"></i> {{ cat.average_rating }}/10
+                </span>
+                <small class="text-muted">({{ cat.total_ratings }} rating{{ cat.total_ratings|pluralize }})</small>
+            </h5>
+        </div>
+
+        <!-- Rating Form -->
+        {% if user.is_authenticated %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        {% if user_rating %}
+                            Your Rating: {{ user_rating.score }}/10 - Update it?
+                        {% else %}
+                            Rate this cat:
+                        {% endif %}
+                    </h6>
+                    <form method="post" action="{% url 'rate_cat' cat.pk %}" class="d-flex gap-2">
+                        {% csrf_token %}
+                        {{ rating_form.score }}
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            {% if user_rating %}Update{% else %}Rate{% endif %}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                <a href="{% url 'login' %}">Login</a> to rate and comment on this cat!
+            </div>
+        {% endif %}
+
+        <!-- Owner Actions -->
+        {% if user == cat.owner %}
+            <div class="mb-3">
+                <a href="{% url 'cat_update' cat.pk %}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <a href="{% url 'cat_delete' cat.pk %}" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<hr class="my-4">
+
+<!-- Comments Section -->
+<div class="row">
+    <div class="col-12">
+        <h4>Comments ({{ comments.count }})</h4>
+        
+        <!-- Add Comment Form -->
+        {% if user.is_authenticated %}
+            {% if user_rating %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">Add a comment:</h6>
+                        <form method="post" action="{% url 'add_comment' cat.pk %}">
+                            {% csrf_token %}
+                            {{ comment_form.text }}
+                            <button type="submit" class="btn btn-primary btn-sm mt-2">
+                                <i class="fas fa-comment"></i> Add Comment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    <i class="fas fa-info-circle"></i> You must rate this cat before commenting!
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <!-- Comments List -->
+        {% for comment in comments %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <strong>{{ comment.user.username }}</strong>
+                        <small class="text-muted">
+                            {% if comment.user_rating %}
+                                <span class="badge bg-secondary">{{ comment.user_rating }}/10</span>
+                            {% endif %}
+                            {{ comment.created_at|date:"M d, Y g:i A" }}
+                        </small>
+                    </div>
+                    <p class="mb-0 mt-2">{{ comment.text }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">No comments yet. Be the first to comment!</p>
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}

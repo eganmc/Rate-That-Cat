@@ -1,17 +1,57 @@
 {% extends 'cats/base.html' %}
 {% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Cat Gallery</h2>
+    {% if user.is_authenticated %}
+        <a href="{% url 'cat_create' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add Your Cat
+        </a>
+    {% endif %}
+</div>
+
+{% if not user.is_authenticated %}
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i> 
+        <a href="{% url 'signup' %}">Sign up</a> or <a href="{% url 'login' %}">login</a> to upload your own cats and participate in rating!
+    </div>
+{% endif %}
+
 <div class="row">
-{% for cat in cats %}
-    <div class="col-md-4">
-        <div class="card mb-3">
-            <img src="{{ cat.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
-            <div class="card-body">
-                <h5 class="card-title">{{ cat.name }}</h5>
-                <p>Rating: {{ cat.rating }}</p>
-                <a href="{% url 'cat_detail' cat.pk %}" class="btn btn-primary">View</a>
+    {% for cat in cats %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="{{ cat.image.url }}" class="card-img-top" style="height: 250px; object-fit: cover;" alt="{{ cat.name }}">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ cat.name }}</h5>
+                    <p class="card-text text-muted small">by {{ cat.owner.username }}</p>
+                    
+                    {% if cat.description %}
+                        <p class="card-text">{{ cat.description|truncatewords:15 }}</p>
+                    {% endif %}
+                    
+                    <div class="mt-auto">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-warning text-dark">
+                                <i class="fas fa-star"></i> {{ cat.average_rating }}/10
+                            </span>
+                            <small class="text-muted">{{ cat.total_ratings }} rating{{ cat.total_ratings|pluralize }}</small>
+                        </div>
+                        <a href="{% url 'cat_detail' cat.pk %}" class="btn btn-primary w-100">
+                            <i class="fas fa-eye"></i> View Details
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-{% endfor %}
+    {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <h4>No cats in the gallery yet!</h4>
+                <p>Be the first to <a href="{% url 'cat_create' %}">upload a cat</a> to get started.</p>
+            </div>
+        </div>
+    {% endfor %}
 </div>
+
 {% endblock %}
