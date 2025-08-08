@@ -1,0 +1,1 @@
+web: gunicorn catgallery.wsgi
