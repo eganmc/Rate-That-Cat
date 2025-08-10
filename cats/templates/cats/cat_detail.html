@@ -117,42 +117,4 @@
     </div>
 </div>
 
-<style>
-.cat-image-container {
-    position: relative;
-    width: 100%;
-    height: 400px; /* Fixed height for consistency */
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #f8f9fa; /* Light background in case image doesn't load */
-}
-
-.cat-detail-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* This ensures the image covers the container without distortion */
-    object-position: center; /* Center the image within the container */
-    transition: transform 0.3s ease; /* Smooth hover effect */
-}
-
-.cat-detail-image:hover {
-    transform: scale(1.05); /* Slight zoom on hover for interactivity */
-}
-
-/* Responsive adjustments */
-@media (max-width: 767px) {
-    .cat-image-container {
-        height: 300px; /* Smaller height on mobile */
-        margin-bottom: 2rem;
-    }
-}
-
-@media (min-width: 1200px) {
-    .cat-image-container {
-        height: 450px; /* Larger height on bigger screens */
-    }
-}
-</style>
-
 {% endblock %}
