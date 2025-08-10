@@ -21,16 +21,32 @@
     transform: scale(1.05);
 }
 
-/* Form Styles */
+.cat-gallery-image {
+    height: 250px;
+    object-fit: cover;
+}
+
+.profile-cat-image {
+    height: 200px;
+    object-fit: cover;
+}
+
 .form-control {
     margin-bottom: 0.5rem;
 }
 
-/* Responsive adjustments for cat images */
 @media (max-width: 767px) {
     .cat-image-container {
         height: 300px;
         margin-bottom: 2rem;
+    }
+    
+    .cat-gallery-image {
+        height: 200px;
+    }
+    
+    .profile-cat-image {
+        height: 150px;
     }
 }
 
