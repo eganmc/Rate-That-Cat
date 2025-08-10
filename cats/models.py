@@ -2,12 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Avg
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
 class Cat(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='cats/')
+    # Use CloudinaryField for better integration
+    image = CloudinaryField(
+        'image',
+        folder='cat_gallery/cats',  # Organize images in folders
+        transformation={
+            'width': 800,
+            'height': 600,
+            'crop': 'limit',
+            'quality': 'auto:best',
+            'format': 'auto'
+        }
+    )
     description = models.TextField(blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cats')
     created_at = models.DateTimeField(auto_now_add=True)
