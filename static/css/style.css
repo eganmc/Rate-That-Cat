@@ -8,7 +8,6 @@ body {
     min-height: 100vh;
 }
 
-/* Optional: Add overlay to make content more readable */
 body::before {
     content: '';
     position: fixed;
@@ -16,13 +15,12 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 248, 240, 0.5); /* Warm cream color with 50% opacity */
     z-index: -1;
 }
 
-/* Ensure content container has proper background */
 .main-container {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 251, 245, 0.92); /* Warm white background */
     border-radius: 8px;
     padding: 20px;
     margin-top: 20px;
@@ -38,6 +36,10 @@ body::before {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     background-color: #f8f9fa;
+}
+
+.navbar-brown {
+    background-color: #8B6F47 !important; /* Soft brown color */
 }
 
 .cat-detail-image {
