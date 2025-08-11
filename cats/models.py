@@ -11,11 +11,8 @@ class Cat(models.Model):
     # Use CloudinaryField for better integration
     image = CloudinaryField(
         'image',
-        folder='cat_gallery/cats',  # Organize images in folders
+        folder='cat_gallery/cats',
         transformation={
-            'width': 800,
-            'height': 600,
-            'crop': 'limit',
             'quality': 'auto:best',
             'format': 'auto'
         }

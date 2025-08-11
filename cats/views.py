@@ -3,7 +3,6 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db import IntegrityError
-from django.contrib.auth.models import User
 from .models import Cat, Rating, Comment
 from .forms import CatForm, RatingForm, CommentForm, CustomUserCreationForm
 from django.contrib.auth import logout
