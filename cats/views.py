@@ -6,6 +6,8 @@ from django.db import IntegrityError
 from django.contrib.auth.models import User
 from .models import Cat, Rating, Comment
 from .forms import CatForm, RatingForm, CommentForm, CustomUserCreationForm
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -144,3 +146,10 @@ def signup(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'cats/signup.html', {'form': form})
+
+def custom_logout(request):
+    if request.method == 'POST':
+        logout(request)
+        messages.success(request, 'You have been logged out successfully.')
+        return redirect('cat_list')
+    return render(request, 'registration/logout.html')
