@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cat Gallery</title>
+    <title>Rate That Cat</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'cat_list' %}">🐱 Cat Gallery</a>
+            <a class="navbar-brand" href="{% url 'cat_list' %}">🐱 Rate That Cat 🐱</a>
             
             <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="{% url 'cat_list' %}">Gallery</a>
@@ -19,7 +19,7 @@
                     <a class="nav-link" href="{% url 'cat_create' %}">Add Cat</a>
                     <a class="nav-link" href="{% url 'profile' %}">My Profile</a>
                     <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    <span class="navbar-text">Welcome, {{ user.username }}!</span>
+                    <span class="navbar-text"> </span> <!-- Welcome, {{ user.username }}! -->
                 {% else %}
                     <a class="nav-link" href="{% url 'login' %}">Login</a>
                     <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
@@ -28,18 +28,20 @@
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <!-- Messages -->
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
+    <div class="container">
+        <div class="main-container">
+            <!-- Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
 
-        {% block content %}{% endblock %}
+            {% block content %}{% endblock %}
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
