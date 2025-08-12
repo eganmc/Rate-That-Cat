@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 body {
     background-image: url('../images/cat-background.webp');
     background-size: cover;
@@ -5,6 +9,8 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .chewy {
@@ -41,6 +47,7 @@ body::before {
     border-radius: 15px;
     padding: 25px;
     margin-top: 20px;
+    margin-bottom: 20px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -360,5 +367,47 @@ body::before {
 @media (min-width: 1200px) {
     .cat-image-container {
         height: 450px;
+    }
+}
+
+/* Footer Styles */
+.footer {
+    background: linear-gradient(135deg, rgba(241, 227, 210, 0.95), rgba(212, 184, 150, 0.95));
+    padding: 1.5rem 0 1rem;
+    border-radius: 15px 15px 0 0;
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(139, 69, 19, 0.2);
+    margin-top: auto; /* This pushes the footer to the bottom */
+}
+
+.footer p {
+    color: #24120b;
+    margin-bottom: 0.25rem;
+}
+
+.footer .pmark {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #8B4513;
+}
+
+.footer-tagline {
+    font-size: 0.85rem;
+    color: #6C757D !important;
+    font-style: italic;
+}
+
+/* Responsive footer adjustments */
+@media (max-width: 767px) {
+    .footer {
+        padding: 1rem 0 0.75rem;
+    }
+    
+    .footer .pmark {
+        font-size: 1rem;
+    }
+    
+    .footer-tagline {
+        font-size: 0.8rem;
     }
 }
