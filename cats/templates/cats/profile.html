@@ -1,144 +1,178 @@
 {% extends 'cats/base.html' %}
 {% block content %}
 
-<h2>{{ user.username }}'s Profile</h2>
-<p class="text-muted">Member since {{ user.date_joined|date:"M d, Y" }}</p>
+<div class="gallery-header">
+    <div class="text-center mb-4">
+        <h2 class="chewy gallery-title">
+            <i class="fas fa-user-circle me-2"></i>{{ user.username }}'s Profile
+        </h2>
+        <p class="text-muted comic">Member since {{ user.date_joined|date:"M d, Y" }}</p>
+    </div>
+</div>
 
-<div class="row">
-    <!-- User Stats -->
-    <div class="col-12 mb-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h3 class="text-primary">{{ user_cats.count }}</h3>
-                        <p class="mb-0">Cats Uploaded</p>
-                    </div>
-                </div>
+<!-- User Stats -->
+<div class="row mb-4">
+    <div class="col-md-4 mb-3">
+        <div class="card cat-card text-center">
+            <div class="card-body">
+                <i class="fas fa-cat fa-2x mb-2" style="color: #FF6B6B;"></i>
+                <h3 class="chewy" style="color: #8B4513;">{{ user_cats.count }}</h3>
+                <p class="mb-0 pmark">Cats Uploaded</p>
             </div>
-            <div class="col-md-4">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h3 class="text-success">{{ user_ratings.count }}</h3>
-                        <p class="mb-0">Ratings Given</p>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card cat-card text-center">
+            <div class="card-body">
+                <i class="fas fa-star fa-2x mb-2" style="color: #FFC107;"></i>
+                <h3 class="chewy" style="color: #8B4513;">{{ user_ratings.count }}</h3>
+                <p class="mb-0 pmark">Ratings Given</p>
             </div>
-            <div class="col-md-4">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h3 class="text-info">{{ user_comments.count }}</h3>
-                        <p class="mb-0">Comments Posted</p>
-                    </div>
-                </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card cat-card text-center">
+            <div class="card-body">
+                <i class="fas fa-comments fa-2x mb-2" style="color: #17A2B8;"></i>
+                <h3 class="chewy" style="color: #8B4513;">{{ user_comments.count }}</h3>
+                <p class="mb-0 pmark">Comments Posted</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Tabs for different sections -->
-<ul class="nav nav-tabs" id="profileTabs" role="tablist">
-    <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="cats-tab" data-bs-toggle="tab" data-bs-target="#cats" type="button">
-            My Cats ({{ user_cats.count }})
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button">
-            My Comments ({{ user_comments.count }})
-        </button>
-    </li>
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="ratings-tab" data-bs-toggle="tab" data-bs-target="#ratings" type="button">
-            My Ratings ({{ user_ratings.count }})
-        </button>
-    </li>
-</ul>
+<!-- Tabs -->
+<div class="cats-grid-container">
+    <ul class="nav nav-tabs mb-3" id="profileTabs" role="tablist" style="border-bottom: 2px solid rgba(139, 69, 19, 0.2);">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active pmark" id="cats-tab" data-bs-toggle="tab" data-bs-target="#cats" type="button" style="color: #8B4513; border-radius: 15px 15px 0 0;">
+                <i class="fas fa-cat me-1"></i>My Cats ({{ user_cats.count }})
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link pmark" id="comments-tab" data-bs-toggle="tab" data-bs-target="#comments" type="button" style="color: #8B4513; border-radius: 15px 15px 0 0;">
+                <i class="fas fa-comments me-1"></i>My Comments ({{ user_comments.count }})
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link pmark" id="ratings-tab" data-bs-toggle="tab" data-bs-target="#ratings" type="button" style="color: #8B4513; border-radius: 15px 15px 0 0;">
+                <i class="fas fa-star me-1"></i>My Ratings ({{ user_ratings.count }})
+            </button>
+        </li>
+    </ul>
 
-<div class="tab-content mt-3" id="profileTabsContent">
-    <!-- My Cats Tab -->
-    <div class="tab-pane fade show active" id="cats">
-        {% if user_cats %}
-            <div class="row">
-                {% for cat in user_cats %}
-                    <div class="col-md-4 mb-3">
-                        <div class="card">
-                            <img src="{{ cat.image.url }}" class="card-img-top profile-cat-image" alt="{{ cat.name }}">
-                            <div class="card-body">
-                                <h6 class="card-title">{{ cat.name }}</h6>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="badge bg-warning text-dark">
-                                        <i class="fas fa-star"></i> {{ cat.average_rating }}/10
-                                    </span>
-                                    <a href="{% url 'cat_detail' cat.pk %}" class="btn btn-sm btn-primary">View</a>
+    <div class="tab-content" id="profileTabsContent">
+        <!-- My Cats Tab -->
+        <div class="tab-pane fade show active" id="cats">
+            {% if user_cats %}
+                <div class="row">
+                    {% for cat in user_cats %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card cat-card">
+                                <div class="cat-image-wrapper">
+                                    <img src="{{ cat.image.url }}" class="card-img-top profile-cat-image" alt="{{ cat.name }}">
+                                    <div class="cat-overlay">
+                                        <div class="rating-badge">
+                                            <i class="fas fa-star"></i> {{ cat.average_rating }}/10
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-title chewy cat-name">{{ cat.name }}</h6>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted ratings-count">
+                                            <i class="fas fa-heart me-1"></i>{{ cat.total_ratings }} rating{{ cat.total_ratings|pluralize }}
+                                        </small>
+                                        <a href="{% url 'cat_detail' cat.pk %}" class="btn btn-sm btn-view-cat">
+                                            <i class="fas fa-eye"></i> View
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert empty-gallery-alert text-center">
+                    <div class="empty-icon">
+                        <i class="fas fa-cat fa-3x mb-3"></i>
+                    </div>
+                    <h5 class="chewy">No cats uploaded yet!</h5>
+                    <p class="comic">Share your first furry friend with our community.</p>
+                    <a href="{% url 'cat_create' %}" class="btn btn-add-cat">
+                        <i class="fas fa-plus-circle me-1"></i>Upload Your First Cat
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- My Comments Tab -->
+        <div class="tab-pane fade" id="comments">
+            {% if user_comments %}
+                {% for comment in user_comments %}
+                    <div class="card cat-card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h6 class="mb-1 chewy">
+                                    <a href="{% url 'cat_detail' comment.cat.pk %}" style="color: #8B4513; text-decoration: none;">
+                                        <i class="fas fa-external-link-alt me-1"></i>{{ comment.cat.name }}
+                                    </a>
+                                </h6>
+                                <div class="d-flex align-items-center gap-2">
+                                    {% if comment.user_rating %}
+                                        <span class="badge bg-warning text-dark">{{ comment.user_rating }}/10</span>
+                                    {% endif %}
+                                    <small class="text-muted">{{ comment.created_at|date:"M d, Y" }}</small>
+                                </div>
+                            </div>
+                            <p class="mb-0 comic mt-2">{{ comment.text }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-custom text-center">
+                    <i class="fas fa-comment fa-2x mb-3" style="color: #17A2B8; opacity: 0.7;"></i>
+                    <h5 class="chewy">No comments yet!</h5>
+                    <p class="comic">Rate some cats and share your thoughts with the community!</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- My Ratings Tab -->
+        <div class="tab-pane fade" id="ratings">
+            {% if user_ratings %}
+                {% for rating in user_ratings %}
+                    <div class="card cat-card mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="mb-1 chewy">
+                                        <a href="{% url 'cat_detail' rating.cat.pk %}" style="color: #8B4513; text-decoration: none;">
+                                            <i class="fas fa-external-link-alt me-1"></i>{{ rating.cat.name }}
+                                        </a>
+                                    </h6>
+                                    <small class="text-muted comic">by {{ rating.cat.owner.username }}</small>
+                                </div>
+                                <div class="text-end">
+                                    <span class="badge bg-warning text-dark fs-6">{{ rating.score }}/10</span>
+                                    <br>
+                                    <small class="text-muted">{{ rating.created_at|date:"M d, Y" }}</small>
                                 </div>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
-            </div>
-        {% else %}
-            <div class="alert alert-info">
-                <p>You haven't uploaded any cats yet. <a href="{% url 'cat_create' %}">Upload your first cat!</a></p>
-            </div>
-        {% endif %}
-    </div>
-
-    <!-- My Comments Tab -->
-    <div class="tab-pane fade" id="comments">
-        {% if user_comments %}
-            {% for comment in user_comments %}
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <h6 class="mb-1">
-                                <a href="{% url 'cat_detail' comment.cat.pk %}">{{ comment.cat.name }}</a>
-                            </h6>
-                            <small class="text-muted">
-                                {% if comment.user_rating %}
-                                    <span class="badge bg-secondary">{{ comment.user_rating }}/10</span>
-                                {% endif %}
-                                {{ comment.created_at|date:"M d, Y" }}
-                            </small>
-                        </div>
-                        <p class="mb-0">{{ comment.text }}</p>
-                    </div>
+            {% else %}
+                <div class="alert alert-custom text-center">
+                    <i class="fas fa-star fa-2x mb-3" style="color: #FFC107; opacity: 0.7;"></i>
+                    <h5 class="chewy">No ratings given yet!</h5>
+                    <p class="comic">Explore our gallery and rate some adorable cats!</p>
+                    <a href="{% url 'cat_list' %}" class="btn btn-view-cat">
+                        <i class="fas fa-images me-1"></i>Browse Gallery
+                    </a>
                 </div>
-            {% endfor %}
-        {% else %}
-            <div class="alert alert-info">
-                <p>You haven't posted any comments yet. Rate some cats and share your thoughts!</p>
-            </div>
-        {% endif %}
-    </div>
-
-    <!-- My Ratings Tab -->
-    <div class="tab-pane fade" id="ratings">
-        {% if user_ratings %}
-            {% for rating in user_ratings %}
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="mb-1">
-                                    <a href="{% url 'cat_detail' rating.cat.pk %}">{{ rating.cat.name }}</a>
-                                </h6>
-                                <small class="text-muted">by {{ rating.cat.owner.username }}</small>
-                            </div>
-                            <div class="text-end">
-                                <span class="badge bg-warning text-dark fs-6">{{ rating.score }}/10</span>
-                                <br>
-                                <small class="text-muted">{{ rating.created_at|date:"M d, Y" }}</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <div class="alert alert-info">
-                <p>You haven't rated any cats yet. <a href="{% url 'cat_list' %}">Browse the gallery</a> and rate some cats!</p>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
 </div>
 

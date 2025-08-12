@@ -3,59 +3,68 @@
 
 <div class="row justify-content-center">
     <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="mb-0">{{ title|default:"Add Cat" }}</h3>
+        <div class="card cat-card">
+            <div class="card-header text-center" style="background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 142, 83, 0.2)); border-bottom: 1px solid rgba(139, 69, 19, 0.2);">
+                <h3 class="mb-0 chewy" style="color: #8B4513; font-size: 2rem;">
+                    <i class="fas fa-cat me-2"></i>{{ title|default:"Add Cat" }}
+                </h3>
+                <p class="comic text-muted mt-2 mb-0">Share that cat!</p>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="padding: 2rem;">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     
-                    <div class="mb-3">
-                        <label for="{{ form.name.id_for_label }}" class="form-label">Cat Name *</label>
+                    <div class="mb-4">
+                        <label for="{{ form.name.id_for_label }}" class="form-label pmark" style="color: #8B4513; font-size: 1.1rem;">
+                            <i class="fas fa-tag me-1"></i>Cat Name *
+                        </label>
                         {{ form.name }}
                         {% if form.name.errors %}
-                            <div class="text-danger small">
+                            <div class="text-danger small mt-1">
                                 {% for error in form.name.errors %}
-                                    <div>{{ error }}</div>
+                                    <div><i class="fas fa-exclamation-triangle me-1"></i>{{ error }}</div>
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        <div class="form-text">Give your cat a memorable name!</div>
+                        <div class="form-text comic"></div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="{{ form.image.id_for_label }}" class="form-label">Cat Photo *</label>
+                    <div class="mb-4">
+                        <label for="{{ form.image.id_for_label }}" class="form-label pmark" style="color: #8B4513; font-size: 1.1rem;">
+                            <i class="fas fa-camera me-1"></i>Cat Photo *
+                        </label>
                         {{ form.image }}
                         {% if form.image.errors %}
-                            <div class="text-danger small">
+                            <div class="text-danger small mt-1">
                                 {% for error in form.image.errors %}
-                                    <div>{{ error }}</div>
+                                    <div><i class="fas fa-exclamation-triangle me-1"></i>{{ error }}</div>
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        <div class="form-text">Upload a photo of your cat (JPG, PNG, GIF - max 5MB)</div>
+                        <div class="form-text comic"><i class="fas fa-info-circle me-1"></i>Upload a high-quality photo (JPG, PNG, GIF - max 5MB)</div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                    <div class="mb-4">
+                        <label for="{{ form.description.id_for_label }}" class="form-label pmark" style="color: #8B4513; font-size: 1.1rem;">
+                            <i class="fas fa-align-left me-1"></i>Description
+                        </label>
                         {{ form.description }}
                         {% if form.description.errors %}
-                            <div class="text-danger small">
+                            <div class="text-danger small mt-1">
                                 {% for error in form.description.errors %}
-                                    <div>{{ error }}</div>
+                                    <div><i class="fas fa-exclamation-triangle me-1"></i>{{ error }}</div>
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        <div class="form-text">Tell us about your cat - personality, favorite activities, etc.</div>
+                        <div class="form-text comic"><i class="fas fa-heart me-1"></i>What creature have you brought before us today.</div>
                     </div>
 
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-save"></i> Save Cat
+                    <div class="d-flex gap-3 justify-content-center">
+                        <button type="submit" class="btn btn-add-cat" style="padding: 0.75rem 2rem; font-size: 1.1rem;">
+                            <i class="fas fa-save me-2"></i>Save My Cat
                         </button>
-                        <a href="{% url 'cat_list' %}" class="btn btn-secondary">
-                            <i class="fas fa-times"></i> Cancel
+                        <a href="{% url 'cat_list' %}" class="btn btn-outline-secondary" style="padding: 0.75rem 2rem; font-size: 1.1rem; border-radius: 25px; border-color: #8B4513; color: #8B4513;">
+                            <i class="fas fa-times me-2"></i>Cancel
                         </a>
                     </div>
                 </form>

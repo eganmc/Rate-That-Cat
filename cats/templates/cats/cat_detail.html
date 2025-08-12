@@ -9,133 +9,192 @@
     </div>
     
     <div class="col-md-6">
-        <h2>{{ cat.name }}</h2>
-        <p class="text-muted">Uploaded by {{ cat.owner.username }} on {{ cat.created_at|date:"M d, Y" }}</p>
+        <h2 class="chewy" style="color: #8B4513; font-size: 2.5rem;">
+            <i class="fas fa-cat me-2"></i>{{ cat.name }}
+        </h2>
+        <p class="text-muted comic">
+            <i class="fas fa-user me-1"></i>Uploaded by <strong>{{ cat.owner.username }}</strong> on {{ cat.created_at|date:"M d, Y" }}
+        </p>
         
         {% if cat.description %}
-            <p class="lead">{{ cat.description }}</p>
+            <p class="lead comic" style="color: #495057;">{{ cat.description }}</p>
         {% endif %}
 
         <!-- Rating Display -->
-        <div class="mb-3">
-            <h5>Rating: 
-                <span class="badge bg-warning text-dark">
-                    <i class="fas fa-star"></i> {{ cat.average_rating }}/10
-                </span>
-                <small class="text-muted">({{ cat.total_ratings }} rating{{ cat.total_ratings|pluralize }})</small>
-            </h5>
+        <div class="mb-4">
+            <div class="card cat-card">
+                <div class="card-body text-center">
+                    <h5 class="pmark" style="color: #8B4513;">
+                        <i class="fas fa-star me-2" style="color: #FFC107;"></i>Overall Rating
+                    </h5>
+                    <div class="mb-2">
+                        <span class="badge bg-warning text-dark" style="font-size: 1.2rem; padding: 0.5rem 1rem;">
+                            <i class="fas fa-star"></i> {{ cat.average_rating }}/10
+                        </span>
+                    </div>
+                    <small class="text-muted comic">
+                        <i class="fas fa-heart me-1"></i>{{ cat.total_ratings }} rating{{ cat.total_ratings|pluralize }}
+                    </small>
+                </div>
+            </div>
         </div>
 
         <!-- Rating Form -->
         {% if user.is_authenticated %}
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h6 class="card-title">
-                        {% if user_rating %}
-                            Your Rating: {{ user_rating.score }}/10 
-                            <div class="d-flex gap-2 mt-2">
-                                <div>
-                                    <form method="post" action="{% url 'rate_cat' cat.pk %}" class="d-inline">
-                                        {% csrf_token %}
-                                        {{ rating_form.score }}
-                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
-                                    </form>
-                                </div>
-                                <a href="{% url 'delete_rating' user_rating.pk %}" class="btn btn-outline-danger btn-sm">
-                                    <i class="fas fa-trash"></i> Remove Rating
-                                </a>
-                            </div>
-                        {% else %}
-                            Rate this cat:
-                            <form method="post" action="{% url 'rate_cat' cat.pk %}" class="d-flex gap-2 mt-2">
-                                {% csrf_token %}
-                                {{ rating_form.score }}
-                                <button type="submit" class="btn btn-primary btn-sm">Rate</button>
-                            </form>
-                        {% endif %}
+            <div class="card cat-card mb-3">
+                <div class="card-header" style="background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 152, 0, 0.2)); border-bottom: 1px solid rgba(139, 69, 19, 0.2);">
+                    <h6 class="chewy mb-0" style="color: #8B4513;">
+                        <i class="fas fa-star-half-alt me-2"></i>Your Rating
                     </h6>
+                </div>
+                <div class="card-body">
+                    {% if user_rating %}
+                        <div class="text-center mb-3">
+                            <span class="badge bg-secondary" style="font-size: 1rem; padding: 0.4rem 0.8rem;">
+                                Your Score: {{ user_rating.score }}/10
+                            </span>
+                        </div>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <form method="post" action="{% url 'rate_cat' cat.pk %}" class="d-inline">
+                                {% csrf_token %}
+                                <div class="input-group input-group-sm">
+                                    {{ rating_form.score }}
+                                    <button type="submit" class="btn btn-view-cat btn-sm">
+                                        <i class="fas fa-sync-alt me-1"></i>Update
+                                    </button>
+                                </div>
+                            </form>
+                            <a href="{% url 'delete_rating' user_rating.pk %}" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash me-1"></i>Remove
+                            </a>
+                        </div>
+                    {% else %}
+                        <p class="comic text-center mb-3">Rate this adorable cat:</p>
+                        <form method="post" action="{% url 'rate_cat' cat.pk %}">
+                            {% csrf_token %}
+                            <div class="d-flex gap-2 justify-content-center">
+                                {{ rating_form.score }}
+                                <button type="submit" class="btn btn-view-cat btn-sm">
+                                    <i class="fas fa-star me-1"></i>Rate
+                                </button>
+                            </div>
+                        </form>
+                    {% endif %}
                 </div>
             </div>
         {% else %}
-            <div class="alert alert-info">
-                <a href="{% url 'login' %}">Login</a> to rate and comment on this cat!
+            <div class="alert alert-custom text-center">
+                <i class="fas fa-info-circle me-2"></i>
+                <span class="comic">
+                    <a href="{% url 'login' %}" style="color: #8B4513; text-decoration: none;">Login</a> to rate and comment on this cat!
+                </span>
             </div>
         {% endif %}
 
         <!-- Owner Actions -->
         {% if user == cat.owner %}
-            <div class="mb-3">
-                <a href="{% url 'cat_update' cat.pk %}" class="btn btn-warning">
-                    <i class="fas fa-edit"></i> Edit
-                </a>
-                <a href="{% url 'cat_delete' cat.pk %}" class="btn btn-danger">
-                    <i class="fas fa-trash"></i> Delete
-                </a>
+            <div class="mb-3 text-center">
+                <div class="btn-group">
+                    <a href="{% url 'cat_update' cat.pk %}" class="btn btn-warning" style="border-radius: 15px 0 0 15px;">
+                        <i class="fas fa-edit me-1"></i>Edit
+                    </a>
+                    <a href="{% url 'cat_delete' cat.pk %}" class="btn btn-danger" style="border-radius: 0 15px 15px 0;">
+                        <i class="fas fa-trash me-1"></i>Delete
+                    </a>
+                </div>
             </div>
         {% endif %}
     </div>
 </div>
 
-<hr class="my-4">
+<hr class="my-5" style="border: 2px solid rgba(139, 69, 19, 0.2); border-radius: 2px;">
 
 <!-- Comments Section -->
-<div class="row">
-    <div class="col-12">
-        <h4>Comments ({{ comments.count }})</h4>
-        
-        <!-- Add Comment Form -->
-        {% if user.is_authenticated %}
-            {% if user_rating %}
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h6 class="card-title">Add a comment:</h6>
-                        <form method="post" action="{% url 'add_comment' cat.pk %}">
-                            {% csrf_token %}
-                            {{ comment_form.text }}
-                            <button type="submit" class="btn btn-primary btn-sm mt-2">
-                                <i class="fas fa-comment"></i> Add Comment
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            {% else %}
-                <div class="alert alert-warning">
-                    <i class="fas fa-info-circle"></i> You must rate this cat before commenting!
-                </div>
-            {% endif %}
-        {% endif %}
-
-        <!-- Comments List -->
-        {% for comment in comments %}
-            <div class="card mb-2">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <strong>{{ comment.user.username }}</strong>
-                        <div class="d-flex align-items-center gap-2">
-                            <small class="text-muted">
-                                {% if comment.user_rating %}
-                                    <span class="badge bg-secondary">{{ comment.user_rating }}/10</span>
-                                {% endif %}
-                                {{ comment.created_at|date:"M d, Y g:i A" }}
-                            </small>
-                    
-                            <!-- Show edit/delete options for comment owner -->
-                            {% if user == comment.user %}
-                                <div class="btn-group btn-group-sm">
-                                    <a href="{% url 'edit_comment' comment.pk %}" class="btn btn-outline-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="{% url 'delete_comment' comment.pk %}" class="btn btn-outline-danger btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+<div class="cats-grid-container">
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center mb-4">
+                <h4 class="chewy" style="color: #8B4513; font-size: 2rem;">
+                    <i class="fas fa-comments me-2"></i>Comments ({{ comments.count }})
+                </h4>
+            </div>
+            
+            <!-- Add Comment Form -->
+            {% if user.is_authenticated %}
+                {% if user_rating %}
+                    <div class="card cat-card mb-4">
+                        <div class="card-header" style="background: linear-gradient(135deg, rgba(23, 162, 184, 0.2), rgba(13, 110, 253, 0.2)); border-bottom: 1px solid rgba(139, 69, 19, 0.2);">
+                            <h6 class="chewy mb-0" style="color: #8B4513;">
+                                <i class="fas fa-comment-dots me-2"></i>Add Your Comment
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="{% url 'add_comment' cat.pk %}">
+                                {% csrf_token %}
+                                {{ comment_form.text }}
+                                <div class="text-center mt-3">
+                                    <button type="submit" class="btn btn-view-cat">
+                                        <i class="fas fa-comment me-2"></i>Add Comment
+                                    </button>
                                 </div>
-                            {% endif %}
+                            </form>
                         </div>
                     </div>
-                    <p class="mb-0 mt-2">{{ comment.text }}</p>
+                {% else %}
+                    <div class="alert alert-custom text-center mb-4">
+                        <i class="fas fa-star fa-2x mb-2" style="color: #FFC107; opacity: 0.7;"></i>
+                        <h5 class="chewy" style="color: #8B4513;">Rate First, Comment Second!</h5>
+                        <p class="comic mb-0">You must rate this cat before sharing your thoughts.</p>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            <!-- Comments List -->
+            {% for comment in comments %}
+                <div class="card cat-card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="d-flex align-items-center gap-2">
+                                <strong class="chewy" style="color: #8B4513;">
+                                    <i class="fas fa-user-circle me-1"></i>{{ comment.user.username }}
+                                </strong>
+                                {% if comment.user_rating %}
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fas fa-star"></i> {{ comment.user_rating }}/10
+                                    </span>
+                                {% endif %}
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <small class="text-muted comic">
+                                    <i class="fas fa-clock me-1"></i>{{ comment.created_at|date:"M d, Y g:i A" }}
+                                </small>
+                                <!-- Show edit/delete options for comment owner -->
+                                {% if user == comment.user %}
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{% url 'edit_comment' comment.pk %}" class="btn btn-outline-warning btn-sm" style="border-radius: 8px 0 0 8px;">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'delete_comment' comment.pk %}" class="btn btn-outline-danger btn-sm" style="border-radius: 0 8px 8px 0;">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p class="mb-0 mt-3 comic" style="color: #495057; line-height: 1.6;">{{ comment.text }}</p>
+                    </div>
                 </div>
-            </div>
-        {% empty %}
-            <p class="text-muted">No comments yet. Be the first to comment!</p>
-        {% endfor %}
+            {% empty %}
+                <div class="alert empty-gallery-alert text-center">
+                    <div class="empty-icon">
+                        <i class="fas fa-comment fa-3x mb-3"></i>
+                    </div>
+                    <h5 class="chewy" style="color: #8B4513;">No comments yet!</h5>
+                    <p class="comic">Be the first to share your thoughts about this adorable cat!</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}
