@@ -1,12 +1,14 @@
 # Rate That Cat
 
+![Rate That Cat](static/images/catgallery.webp)
+
 ## Overview
 
 Rate That Cat is an interactive web application constructed using Django, with HTML, CSS, and the Bootstrap framework for the front-end. The purpose of the application is for users to share pictures of cats, either their own cats or simply pictures of cats they like, for other people to rate and comment on. The site features full CRUD functionality, allowing users to Create, Read, Update and Delete pictures, comments and ratings of cats.
 
 Despite the forward-facing purpose of the website, it does not have the functionality to confirm that you are infact uploading a picture of a cat. In a isolated scenario outside of project time, I would implement procedure for admins to verify every picture uploaded to the site themselves. Until then, please be warned.
 
-The live project can be found here: POSTLINKPOSTLINKPOSTLINK
+The live project can be found here: [Rate That Cat!](https://rate-that-cat-69e5fc818769.herokuapp.com)
 
 ## Table of Contents
 
@@ -20,6 +22,7 @@ The live project can be found here: POSTLINKPOSTLINKPOSTLINK
 - [Key Features](#key-features)
   - [User Authentication](#user-authentication)
   - [Cats, Ratings and Comments](#cats-ratings-and-comments)
+- [Databases](#databases)
 - [Deployment](#deployment)
 - [AI Implementation and Orchestration](#ai-implementation-and-orchestration)
 - [Testing](#testing)
@@ -32,7 +35,7 @@ The live project can be found here: POSTLINKPOSTLINKPOSTLINK
 
 This project was created utilising an Agile workflow and MoSCoW prioritisation, with multiple user stories set up to explain the key features of the website and then fit into Github Projects. The User Stories were developed using a combination of personal ideas, feedback from friends and Claude AI.
 
-The User Stories were as follows:
+The User Stories are detailed individually here. You can also find them at the [Rate That Cat Project Board](https://github.com/users/eganmc/projects/5).
 
 **User story #1:**
 As a first-time user, I want to upload pictures of my cat so that others can see and rate them.
@@ -164,6 +167,10 @@ The purpose of the website is for users to share pictures of cats, so that other
 
 CRUD functionality was a focus of the project, and as a result every post the user makes, cat, rating or comment, can be edited or deleted, each carrying a success or failure message to properly portray the information to the user.
 
+## Databases
+
+I used a combination of Code Institute's PostgreSQL database and Cloudinary for image storage.
+ERD diagrams were created early in development and used to plan the database models and usable fields.
 
 ## Deployment
 
