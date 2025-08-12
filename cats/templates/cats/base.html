@@ -1,34 +1,54 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Rate That Cat</title>
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rate That Cat - Share, rate and comment on adorable cat photos. Join our community of cat lovers!">
+    <meta name="keywords" content="cats, cat photos, rate cats, pet gallery, cat community">
+    <meta name="author" content="Rate That Cat">
+    
+    <!-- Page Title -->
+    <title>{% block title %}Rate That Cat - Share & Rate Cat Photos{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.webp' %}">
+    
+    <!-- External CSS Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Comic+Relief:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 <body>
+    <!-- Main Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-brown">
         <div class="container">
+            <!-- Brand Logo -->
             <a class="navbar-brand" href="{% url 'cat_list' %}">
                 <img src="{% static 'images/logo.webp' %}" alt="Rate That Cat" class="navbar-logo">
             </a>
             
-            <!-- Hamburger button for mobile -->
+            <!-- Mobile Menu Toggle Button -->
             <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
-            <!-- Collapsible navbar content -->
+            <!-- Navbar -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link mx-2 pmark nav-link-large" href="{% url 'cat_list' %}">
                         <i class="fas fa-images me-1"></i>Gallery
                     </a>
                     
+                    <!-- Authenticated User Menu Items -->
                     {% if user.is_authenticated %}
                         <a class="nav-link mx-2 pmark nav-link-large" href="{% url 'cat_create' %}">
                             <i class="fas fa-plus-circle me-1"></i>Add Cat
@@ -41,6 +61,7 @@
                         </a>
                         <span class="navbar-text d-none d-lg-block"></span>
                     {% else %}
+                        <!-- Guest User Menu Items -->
                         <a class="nav-link mx-2 pmark nav-link-large" href="{% url 'login' %}">
                             <i class="fas fa-sign-in-alt me-1"></i>Login
                         </a>
@@ -53,21 +74,25 @@
         </div>
     </nav>
 
+    <!-- Main Content Container -->
     <div class="container">
         <div class="main-container">
+            <!-- Flash Messages Display -->
             {% if messages %}
                 {% for message in messages %}
                     <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                         {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endfor %}
             {% endif %}
 
+            <!-- Page-Specific Content -->
             {% block content %}{% endblock %}
         </div>
     </div>
 
+    <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
