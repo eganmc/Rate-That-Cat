@@ -32,18 +32,28 @@
                 <div class="card-body">
                     <h6 class="card-title">
                         {% if user_rating %}
-                            Your Rating: {{ user_rating.score }}/10 - Update it?
+                            Your Rating: {{ user_rating.score }}/10 
+                            <div class="d-flex gap-2 mt-2">
+                                <div>
+                                    <form method="post" action="{% url 'rate_cat' cat.pk %}" class="d-inline">
+                                        {% csrf_token %}
+                                        {{ rating_form.score }}
+                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                    </form>
+                                </div>
+                                <a href="{% url 'delete_rating' user_rating.pk %}" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Remove Rating
+                                </a>
+                            </div>
                         {% else %}
                             Rate this cat:
+                            <form method="post" action="{% url 'rate_cat' cat.pk %}" class="d-flex gap-2 mt-2">
+                                {% csrf_token %}
+                                {{ rating_form.score }}
+                                <button type="submit" class="btn btn-primary btn-sm">Rate</button>
+                            </form>
                         {% endif %}
                     </h6>
-                    <form method="post" action="{% url 'rate_cat' cat.pk %}" class="d-flex gap-2">
-                        {% csrf_token %}
-                        {{ rating_form.score }}
-                        <button type="submit" class="btn btn-primary btn-sm">
-                            {% if user_rating %}Update{% else %}Rate{% endif %}
-                        </button>
-                    </form>
                 </div>
             </div>
         {% else %}
@@ -101,12 +111,26 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <strong>{{ comment.user.username }}</strong>
-                        <small class="text-muted">
-                            {% if comment.user_rating %}
-                                <span class="badge bg-secondary">{{ comment.user_rating }}/10</span>
+                        <div class="d-flex align-items-center gap-2">
+                            <small class="text-muted">
+                                {% if comment.user_rating %}
+                                    <span class="badge bg-secondary">{{ comment.user_rating }}/10</span>
+                                {% endif %}
+                                {{ comment.created_at|date:"M d, Y g:i A" }}
+                            </small>
+                    
+                            <!-- Show edit/delete options for comment owner -->
+                            {% if user == comment.user %}
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{% url 'edit_comment' comment.pk %}" class="btn btn-outline-warning btn-sm">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'delete_comment' comment.pk %}" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
                             {% endif %}
-                            {{ comment.created_at|date:"M d, Y g:i A" }}
-                        </small>
+                        </div>
                     </div>
                     <p class="mb-0 mt-2">{{ comment.text }}</p>
                 </div>
@@ -114,7 +138,4 @@
         {% empty %}
             <p class="text-muted">No comments yet. Be the first to comment!</p>
         {% endfor %}
-    </div>
-</div>
-
 {% endblock %}

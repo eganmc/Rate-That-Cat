@@ -7,6 +7,8 @@ from .models import Cat, Rating, Comment
 from .forms import CatForm, RatingForm, CommentForm, CustomUserCreationForm
 from django.contrib.auth import logout
 from django.shortcuts import redirect
+from django.contrib.auth.views import LoginView
+from django.contrib import messages
 
 # Create your views here.
 
@@ -152,3 +154,53 @@ def custom_logout(request):
         messages.success(request, 'You have been logged out successfully.')
         return redirect('cat_list')
     return render(request, 'registration/logout.html')
+
+class CustomLoginView(LoginView):
+    """Custom login view that adds success message"""
+    
+    def form_valid(self, form):
+        """Add success message when user logs in successfully"""
+        messages.success(self.request, f'Welcome back, {form.get_user().username}!')
+        return super().form_valid(form)
+
+@login_required
+def delete_comment(request, pk):
+    """Allow users to delete their own comments"""
+    comment = get_object_or_404(Comment, pk=pk, user=request.user)
+    cat_pk = comment.cat.pk
+    
+    if request.method == 'POST':
+        comment.delete()
+        messages.success(request, 'Your comment has been deleted!')
+        return redirect('cat_detail', pk=cat_pk)
+    
+    return render(request, 'cats/comment_confirm_delete.html', {'comment': comment})
+
+@login_required
+def edit_comment(request, pk):
+    """Allow users to edit their own comments"""
+    comment = get_object_or_404(Comment, pk=pk, user=request.user)
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your comment has been updated!')
+            return redirect('cat_detail', pk=comment.cat.pk)
+    else:
+        form = CommentForm(instance=comment)
+    
+    return render(request, 'cats/edit_comment.html', {'form': form, 'comment': comment})
+
+@login_required
+def delete_rating(request, pk):
+    """Allow users to delete their own ratings"""
+    rating = get_object_or_404(Rating, pk=pk, user=request.user)
+    cat_pk = rating.cat.pk
+    
+    if request.method == 'POST':
+        rating.delete()
+        messages.success(request, 'Your rating has been removed!')
+        return redirect('cat_detail', pk=cat_pk)
+    
+    return render(request, 'cats/rating_confirm_delete.html', {'rating': rating})

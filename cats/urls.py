@@ -10,8 +10,11 @@ urlpatterns = [
     path('cat/<int:pk>/delete/', views.cat_delete, name='cat_delete'),
     path('cat/<int:pk>/rate/', views.rate_cat, name='rate_cat'),
     path('cat/<int:pk>/comment/', views.add_comment, name='add_comment'),
+    path('comment/<int:pk>/edit/', views.edit_comment, name='edit_comment'),
+    path('comment/<int:pk>/delete/', views.delete_comment, name='delete_comment'),
+    path('rating/<int:pk>/delete/', views.delete_rating, name='delete_rating'),
     path('signup/', views.signup, name='signup'),
-    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('login/', views.CustomLoginView.as_view(), name='login'),
     path('profile/', views.profile, name='profile'),
     path('logout/', views.custom_logout, name='logout'),
 ]
