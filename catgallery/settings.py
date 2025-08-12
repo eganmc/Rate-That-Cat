@@ -70,8 +70,7 @@ CLOUDINARY_STORAGE = {
 
 # Static files configuration
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STORAGES = {
     "default": {
@@ -140,3 +139,45 @@ LOGIN_URL = '/login/'
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
+
+
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_REDIRECT_EXEMPT = []
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = 'same-origin'
+
+    CSP_DEFAULT_SRC = ["'self'"]
+    CSP_SCRIPT_SRC = [
+        "'self'",
+        "'unsafe-inline'",
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com",
+    ]
+    CSP_STYLE_SRC = [
+        "'self'",
+        "'unsafe-inline'",
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+    ]
+    CSP_FONT_SRC = [
+        "'self'",
+        "fonts.gstatic.com",
+        "cdnjs.cloudflare.com",
+    ]
+    CSP_IMG_SRC = [
+        "'self'",
+        "data:",
+        "res.cloudinary.com",
+        "*.cloudinary.com",
+    ]
+    CSP_CONNECT_SRC = ["'self'"]
+    CSP_FRAME_ANCESTORS = ["'none'"]
