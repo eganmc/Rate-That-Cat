@@ -24,10 +24,6 @@ env.py
 .vscode/
 *.code-workspace
 
-# Static & Media
-staticfiles/
-media/
-
 # OS Files
 .DS_Store
 Thumbs.db

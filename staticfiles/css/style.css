@@ -1,0 +1,412 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background-image: url('../images/cat-background.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.chewy {
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.pmark {
+  font-family: "Permanent Marker", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.comic {
+  font-family: "Comic Relief", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 248, 240, 0.5); /* Warm cream color with 50% opacity */
+    z-index: -1;
+}
+
+.main-container {
+    background: linear-gradient(135deg, rgba(255, 251, 245, 0.95), rgba(255, 243, 230, 0.95));
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Enhanced Navbar Styles */
+.navbar-brown {
+    background-color: #efe2d0 !important;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid rgba(139, 69, 19, 0.2);
+    padding: 0.8rem 0;
+}
+
+.navbar-text, .navbar-nav, .navbar-link, .navbar-brand, .nav-link {
+    color: #24120b !important;
+}
+
+.navbar-logo {
+    height: 80px;
+    width: 150px;
+    max-width: 200px;
+}
+
+/* Larger navbar links */
+.nav-link-large {
+    font-size: 1.2rem !important;
+    font-weight: 500 !important;
+    padding: 0.8rem 1rem !important;
+    margin: 0.2rem 0.3rem !important;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link-large:hover {
+    background: rgba(139, 69, 19, 0.15) !important;
+    transform: translateY(-2px);
+    color: #1a0c06 !important;
+}
+
+/* Custom hamburger menu styling */
+.custom-toggler {
+    border-color: #24120b;
+    padding: 4px 8px;
+}
+
+.custom-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(36, 18, 11, 0.25);
+}
+
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2836, 18, 11, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Gallery Header Styling */
+.gallery-header {
+    margin-bottom: 2rem;
+}
+
+.gallery-title {
+    font-size: 2.5rem;
+    color: #8B4513;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0;
+}
+
+.btn-add-cat {
+    background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-add-cat:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    background: linear-gradient(135deg, #FF5252, #FF7043);
+}
+
+/* Cats Grid Container */
+.cats-grid-container {
+    background-image: url('../images/gallery-background.webp'); /* Add your background image */
+    background-size: cover; /* or 'contain', 'repeat', etc. depending on your image */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: local; /* Scrolls with content */
+    
+    /* Original styling with overlay */
+    background-color: rgba(255, 248, 240, 0.3); /* Fallback color */
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.3), 0 4px 20px rgba(0, 0, 0, 0.1);
+    
+    /* Create overlay effect */
+    position: relative;
+}
+
+/* Add overlay to cats grid container for better readability */
+.cats-grid-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 248, 240, 0.3));
+    border-radius: 20px;
+    z-index: 0;
+}
+
+/* Ensure content stays above the overlay */
+.cats-grid-container > .row {
+    position: relative;
+    z-index: 1;
+}
+
+/* Enhanced Cat Cards */
+.cat-card {
+    border: none !important;
+    border-radius: 20px !important;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.cat-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cat-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+}
+
+.cat-gallery-image {
+    height: 250px;
+    object-fit: cover;
+    transition: all 0.4s ease;
+}
+
+.cat-card:hover .cat-gallery-image {
+    transform: scale(1.1);
+}
+
+.cat-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.9), rgba(255, 152, 0, 0.9));
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0 0 0 15px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cat-card:hover .cat-overlay {
+    opacity: 1;
+}
+
+.rating-badge {
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.cat-name {
+    color: #8B4513;
+    font-weight: 500;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.cat-owner {
+    color: #6C757D !important;
+    font-style: italic;
+}
+
+.cat-description {
+    color: #495057;
+    line-height: 1.5;
+    margin: 0.75rem 0;
+}
+
+.ratings-count {
+    color: #DC3545 !important;
+    font-weight: 500;
+}
+
+.btn-view-cat {
+    background: linear-gradient(135deg, #FF8C42, #FF6B35);
+    border: none;
+    border-radius: 15px;
+    padding: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-view-cat:hover {
+    background: linear-gradient(135deg, #FF6B35, #E55A2B);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 140, 66, 0.4);
+}
+
+/* Custom Alerts */
+.alert-custom {
+    background: linear-gradient(135deg, rgba(13, 202, 240, 0.1), rgba(13, 110, 253, 0.1));
+    border: 1px solid rgba(13, 202, 240, 0.3);
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+}
+
+.empty-gallery-alert {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.1));
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    backdrop-filter: blur(5px);
+}
+
+.empty-icon {
+    color: #FFC107;
+    opacity: 0.7;
+}
+
+/* Cat Detail Page Styles */
+.cat-image-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: rgba(255, 243, 230, 0.95);
+}
+
+.cat-detail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.cat-detail-image:hover {
+    transform: scale(1.05);
+}
+
+.profile-cat-image {
+    height: 200px;
+    object-fit: cover;
+}
+
+.form-control {
+    margin-bottom: 0.5rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background: rgba(212, 184, 150, 0.95);
+        border-radius: 15px;
+        margin-top: 1rem;
+        padding: 1rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .nav-link-large {
+        text-align: center;
+        margin: 0.3rem 0 !important;
+        padding: 1rem !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .cat-image-container {
+        height: 300px;
+        margin-bottom: 2rem;
+    }
+    
+    .cat-gallery-image {
+        height: 200px;
+    }
+    
+    .profile-cat-image {
+        height: 150px;
+    }
+    
+    .main-container {
+        margin-top: 10px;
+        padding: 15px;
+    }
+    
+    .cats-grid-container {
+        padding: 1rem;
+    }
+    
+    .gallery-title {
+        font-size: 2rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .cat-image-container {
+        height: 450px;
+    }
+}
+
+/* Footer Styles */
+.footer {
+    background: linear-gradient(135deg, rgba(241, 227, 210, 0.95), rgba(212, 184, 150, 0.95));
+    padding: 1.5rem 0 1rem;
+    border-radius: 15px 15px 0 0;
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(139, 69, 19, 0.2);
+    margin-top: auto; /* This pushes the footer to the bottom */
+}
+
+.footer p {
+    color: #24120b;
+    margin-bottom: 0.25rem;
+}
+
+.footer .pmark {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #8B4513;
+}
+
+.footer-tagline {
+    font-size: 0.85rem;
+    color: #6C757D !important;
+    font-style: italic;
+}
+
+/* Responsive footer adjustments */
+@media (max-width: 767px) {
+    .footer {
+        padding: 1rem 0 0.75rem;
+    }
+    
+    .footer .pmark {
+        font-size: 1rem;
+    }
+    
+    .footer-tagline {
+        font-size: 0.8rem;
+    }
+}
