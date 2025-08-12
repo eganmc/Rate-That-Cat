@@ -187,12 +187,29 @@ AI has proved itself as an incredibly useful tool in the development process, bu
 
 ## Testing
 
--
+Lighthouse testing was done on desktop, with mobile responsiveness tested through DevTools. 
+The scores suffers a lot due to Cloudinary, which carries some of its own cookies for data collection and analytics.
 
-## Future Enhancements
+![Lighthouse Results](static/images/lighthouse.webp)
 
--
+I also used Nu HTML Checker initially to test my code, but due to my use of Django supported template shortcuts, the HTML Checker returned many false negatives. HTML showed full functionality despite failures and ran flawlessly between different platforms and deployment environments.
+
+Jigsaw was used for CSS validation, which showed no errors.
+
+![CSS Results](static/images/validstyle.webp)
+
+Code Institute's CI PYthon Linter was also demonstrated on my views.py, returning only mild issues with spacing and line length.
+
+![Pep8 Results](static/images/pep8.webp)
+
+Individually, every feature of the websites core and extended functionality were tested in a local and deployment environment, with no issues.
+
+## Changes I would make
+
+With more time, I would create a form of admin validation, that prevented images from being uploaded to the website without approval from an admin or moderator. I would also have liked to develop the styles further, and to have cleaned up the code structure. 
 
 ## Credits
 
--
+- Claude and Copilot, for major assistance in creation of code blocks and debugging.
+- Emilyhugs on github, for providing a comfortable structure and standard for the project.
+- Dillon, for sticking with us
