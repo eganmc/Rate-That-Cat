@@ -129,7 +129,7 @@ Have site check for cat with most reviews at a 6/10 or above, and display that c
 
 The wireframes for this project were created in Canva. They do not endeavour to show more than the general outline of the project, and were created very early in development as a loose structure to adhere to.
 
-![Rate That Cat Wireframes](static/images/wireframes.png)
+![Rate That Cat Wireframes](static/images/wireframes.webp)
 
 ### Colors
 
@@ -137,7 +137,7 @@ The colours I chose for this project aimed to provide a warm, comforting atmosph
 
 More contrasting colours were chosen to better distinguish interactive elements such as buttons, without discarding the theme of warmth and coziness.
 
-![Rate That Cat Palette](static/images/palette.png)
+![Rate That Cat Palette](static/images/palette.webp)
 
 ### Fonts
 
@@ -150,7 +150,7 @@ The logo was generated using Canva's AI image generation software. I found ChatG
 
 The image of a sleeping cat was chosen to emphasise safety and relaxation, playing into the site's concept of being purely for fun. 
 
-![Rate That Cat Logo](static/images/logo.png)
+![Rate That Cat Logo](static/images/logo.webp)
 
 ## Key Features
 
@@ -173,6 +173,8 @@ The project is being deployed to Heroku. The simple steps for deploying this pro
 3. Set up the Heroku environment with a PostgreSQL database and Cloudinary integration.
 4. Set up your environment variables both in your local development environment and in the Heroku Config Vars.
 5. Link your Heroku app to the cloned repo once it has been pushed, and deploy.
+
+The project was frequently deployed live to Heroku, so as to avoid falling into the trap of deployment-exclusive errors.
 
 ## AI Implementation and Orchestration
 

@@ -1,5 +1,5 @@
 body {
-    background-image: url('../images/cat-background.png');
+    background-image: url('../images/cat-background.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -127,7 +127,7 @@ body::before {
 
 /* Cats Grid Container */
 .cats-grid-container {
-    background-image: url('../images/gallery-background.png'); /* Add your background image */
+    background-image: url('../images/gallery-background.webp'); /* Add your background image */
     background-size: cover; /* or 'contain', 'repeat', etc. depending on your image */
     background-position: center;
     background-repeat: no-repeat;
