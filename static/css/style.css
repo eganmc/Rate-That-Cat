@@ -8,6 +8,18 @@ body {
     min-height: 100vh;
 }
 
+.chewy {
+  font-family: "Chewy", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.pmark {
+  font-family: "Permanent Marker", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
 body::before {
     content: '';
     position: fixed;
