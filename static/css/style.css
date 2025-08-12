@@ -39,7 +39,17 @@ body::before {
 }
 
 .navbar-brown {
-    background-color: #8B6F47 !important; /* Soft brown color */
+    background-color: #f1e3d2 !important; /* Soft brown color */
+}
+
+.navbar-text, .navbar-nav, .navbar-link, .navbar-brand, .nav-link {
+    color: #24120b !important;
+}
+
+.navbar-logo {
+    height: 80px; /* Adjust height as needed */
+    width: 150px;
+    max-width: 200px; /* Prevents logo from being too wide */
 }
 
 .cat-detail-image {
