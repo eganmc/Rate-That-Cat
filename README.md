@@ -199,7 +199,7 @@ The scores suffers a lot due to Cloudinary, which carries some of its own cookie
 
 ![Lighthouse Results](static/images/lighthouse.webp)
 
-I also used Nu HTML Checker initially to test my code, but due to my use of Django supported template shortcuts, the HTML Checker returned many false negatives. HTML showed full functionality despite failures and ran flawlessly between different platforms and deployment environments.
+I also used Nu HTML Checker initially to test my code, but due to my use of Django supported template shortcuts, the HTML Checker returned many false negatives. HTML showed full functionality despite this and ran flawlessly between different platforms and deployment environments.
 
 Jigsaw was used for CSS validation, which showed no errors.
 
@@ -213,7 +213,8 @@ Individually, every feature of the websites core and extended functionality were
 
 ## Changes I would make
 
-With more time, I would create a form of admin validation, that prevented images from being uploaded to the website without approval from an admin or moderator. I would also have liked to develop the styles further, and to have cleaned up the code structure. 
+With more time, I would create a form of admin validation, that prevented images from being uploaded to the website without approval from an admin or moderator. I would also have liked to develop the styles further, and to have cleaned up the code structure.
+I would also put in place more restrictions on content type or length, to maintain a consistent and less vulnerable site structure. 
 
 ## Credits
 
