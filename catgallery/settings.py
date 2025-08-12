@@ -14,8 +14,8 @@ from pathlib import Path
 import os
 import dj_database_url
 import cloudinary
-import cloudinary.uploader
-import cloudinary.api
+import cloudinary.uploader # unused?
+import cloudinary.api 
 if os.path.isfile('env.py'):
     import env
 
@@ -50,19 +50,22 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
-    'cats',
+    'csp',
+    'cats',   
 ]
 
 cloudinary.config(
     cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
     api_key=os.environ.get('CLOUDINARY_API_KEY'),
     api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+    secure=True,
 )
 
 # Media files configuration - Use Cloudinary
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 CLOUDINARY_STORAGE = {
     'FOLDER': 'cat_gallery',
+    'SECURE': True,
 }
 
 # Static files configuration
@@ -70,12 +73,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Use WhiteNoise for static files in production
+# WhiteNoise for static files in production
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add WhiteNoise
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'csp.middleware.CSPMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -128,8 +132,8 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 
-FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
-DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
 
 
 if not DEBUG:
@@ -141,3 +145,34 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = 'same-origin'
+
+    CSP_DEFAULT_SRC = ["'self'"]
+    CSP_SCRIPT_SRC = [
+        "'self'",
+        "'unsafe-inline'",
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com",
+    ]
+    CSP_STYLE_SRC = [
+        "'self'",
+        "'unsafe-inline'",
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com",
+        "fonts.googleapis.com",
+    ]
+    CSP_FONT_SRC = [
+        "'self'",
+        "fonts.gstatic.com",
+        "cdnjs.cloudflare.com",
+    ]
+    CSP_IMG_SRC = [
+        "'self'",
+        "data:",
+        "res.cloudinary.com",
+        "*.cloudinary.com",
+    ]
+    CSP_CONNECT_SRC = ["'self'"]
+    CSP_FRAME_ANCESTORS = ["'none'"]
