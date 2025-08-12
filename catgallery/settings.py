@@ -143,37 +143,21 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_SECONDS = 31536000
     SECURE_REDIRECT_EXEMPT = []
-    SECURE_SSL_REDIRECT = True
+    SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_REFERRER_POLICY = 'same-origin'
 
-    CSP_DEFAULT_SRC = ["'self'"]
-    CSP_SCRIPT_SRC = [
-        "'self'",
-        "'unsafe-inline'",
-        "cdn.jsdelivr.net",
-        "cdnjs.cloudflare.com",
-    ]
-    CSP_STYLE_SRC = [
-        "'self'",
-        "'unsafe-inline'",
-        "cdn.jsdelivr.net",
-        "cdnjs.cloudflare.com",
-        "fonts.googleapis.com",
-    ]
-    CSP_FONT_SRC = [
-        "'self'",
-        "fonts.gstatic.com",
-        "cdnjs.cloudflare.com",
-    ]
-    CSP_IMG_SRC = [
-        "'self'",
-        "data:",
-        "res.cloudinary.com",
-        "*.cloudinary.com",
-    ]
-    CSP_CONNECT_SRC = ["'self'"]
-    CSP_FRAME_ANCESTORS = ["'none'"]
+    CONTENT_SECURITY_POLICY = {
+    'DIRECTIVES': {
+        'connect-src': ["'self'"],
+        'default-src': ["'self'"],
+        'font-src': ["'self'", 'fonts.gstatic.com', 'cdnjs.cloudflare.com'],
+        'frame-ancestors': ["'none'"],
+        'img-src': ["'self'", 'data:', 'res.cloudinary.com', '*.cloudinary.com'],
+        'script-src': ["'self'", "'unsafe-inline'", 'cdn.jsdelivr.net', 'cdnjs.cloudflare.com'],
+        'style-src': ["'self'", "'unsafe-inline'", 'cdn.jsdelivr.net', 'cdnjs.cloudflare.com', 'fonts.googleapis.com']
+    }
+}

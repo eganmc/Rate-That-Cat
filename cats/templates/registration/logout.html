@@ -1,24 +1,29 @@
-
 {% extends 'cats/base.html' %}
 {% block content %}
 
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="text-center mb-0">Logout</h3>
+        <div class="card cat-card">
+            <div class="card-header text-center" style="background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(220, 53, 69, 0.05)); border-bottom: 1px solid rgba(139, 69, 19, 0.2);">
+                <h3 class="mb-0 chewy" style="color: #8B4513; font-size: 1.8rem;">
+                    <i class="fas fa-cat me-2"></i>See You Later!
+                </h3>
+                <p class="comic text-muted mt-2 mb-0">Thanks for staying with us!</p>
             </div>
             <div class="card-body text-center">
-                <p>Are you sure you want to logout, <strong>{{ user.username }}</strong>?</p>
+                <div class="mb-4">
+                    <i class="fas fa-paw fa-3x mb-3" style="color: #FFC107; opacity: 0.7;"></i>
+                    <p class="comic" style="font-size: 1.1rem;">Are you sure you want to logout, <strong class="pmark" style="color: #8B4513;">{{ user.username }}</strong>?</p>
+                </div>
                 
                 <form method="post">
                     {% csrf_token %}
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-danger">
-                            <i class="fas fa-sign-out-alt"></i> Yes, Logout
+                    <div class="d-grid gap-3">
+                        <button type="submit" class="btn btn-danger" style="border-radius: 15px; padding: 0.75rem 1.5rem; font-size: 1.1rem; background: linear-gradient(135deg, #DC3545, #C82333); border: none; transition: all 0.3s ease;">
+                            <i class="fas fa-sign-out-alt me-2"></i>Yes, Logout
                         </button>
-                        <a href="{% url 'cat_list' %}" class="btn btn-secondary">
-                            <i class="fas fa-times"></i> Cancel
+                        <a href="{% url 'cat_list' %}" class="btn btn-view-cat" style="padding: 0.75rem 1.5rem; font-size: 1.1rem;">
+                            <i class="fas fa-times me-2"></i>No, I want to stay!
                         </a>
                     </div>
                 </form>
